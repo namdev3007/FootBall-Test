@@ -11,7 +11,6 @@ public class BallKickController : MonoBehaviour
 
     private void Start()
     {
-        // Lắng nghe sự kiện từ UI
         if (UIManager.Instance != null)
             UIManager.Instance.OnKickPressed.AddListener(KickBallToNearestGoal);
     }
