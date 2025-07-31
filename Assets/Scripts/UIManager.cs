@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Elements")]
     public GameObject kickButton;
+    public GameObject autoKickButton;
 
     [Header("Controller")]
     public BallKickController currentBall;
@@ -68,6 +69,9 @@ public class UIManager : MonoBehaviour
         if (farthestBall != null)
         {
             farthestBall.KickBallToNearestGoal();
+
+            CameraManager.Instance.SwitchToBallCam(farthestBall.ball.transform);
+            CameraManager.Instance.SwitchToPlayerCamWithDelay(2f);
         }
     }
 }

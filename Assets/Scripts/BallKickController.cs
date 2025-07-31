@@ -13,7 +13,6 @@ public class BallKickController : MonoBehaviour
     {
         if (ball == null || goal1 == null || goal2 == null)
         {
-            Debug.LogWarning("Ball or goals not assigned!");
             return;
         }
 
@@ -25,7 +24,9 @@ public class BallKickController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             rb.AddForce(direction * kickForce + Vector3.up * 3f, ForceMode.Impulse);
-            Debug.Log("Đã auto sút bóng vào goal gần nhất!");
+
+            CameraManager.Instance.SwitchToBallCam(ball.transform);
+            CameraManager.Instance.SwitchToPlayerCamWithDelay(2f);
         }
     }
 
@@ -36,4 +37,3 @@ public class BallKickController : MonoBehaviour
         return distanceToGoal1 < distanceToGoal2 ? goal1 : goal2;
     }
 }
-
