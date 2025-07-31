@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
@@ -8,10 +7,11 @@ public class UIManager : MonoBehaviour
     [Header("UI Elements")]
     public GameObject kickButton;
 
-    [Header("Events")]
-    public UnityEvent OnKickPressed;
-
+    [Header("Controller")]
     public BallKickController currentBall;
+
+    [Header("Auto Kick Settings")]
+    public Transform playerTransform;
 
     private void Awake()
     {
@@ -37,7 +37,37 @@ public class UIManager : MonoBehaviour
 
     public void OnKickButtonClicked()
     {
+        if (currentBall != null)
             currentBall.KickBallToNearestGoal();
+        else
+            Debug.LogWarning("No current ball selected!");
     }
 
+    public void OnAutoKickButtonClicked()
+    {
+
+        BallKickController[] allBalls = FindObjectsOfType<BallKickController>();
+        if (allBalls.Length == 0 || playerTransform == null)
+        {
+            return;
+        }
+
+        BallKickController farthestBall = null;
+        float maxDistance = -1f;
+
+        foreach (var ball in allBalls)
+        {
+            float dist = Vector3.Distance(ball.transform.position, playerTransform.position);
+            if (dist > maxDistance)
+            {
+                maxDistance = dist;
+                farthestBall = ball;
+            }
+        }
+
+        if (farthestBall != null)
+        {
+            farthestBall.KickBallToNearestGoal();
+        }
+    }
 }
