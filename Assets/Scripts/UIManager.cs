@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -6,7 +7,6 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Elements")]
     public GameObject kickButton;
-    public GameObject autoKickButton;
 
     [Header("Controller")]
     public BallKickController currentBall;
@@ -73,5 +73,10 @@ public class UIManager : MonoBehaviour
             CameraManager.Instance.SwitchToBallCam(farthestBall.ball.transform);
             CameraManager.Instance.SwitchToPlayerCamWithDelay(2f);
         }
+    }
+
+    public void OnResetButtonClicked()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
